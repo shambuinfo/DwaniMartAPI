@@ -16,17 +16,19 @@ var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 */
 // File upload settings  
-const PATH = './../dwanimart_backend/src/assets/category';
+const PATH = './uploads';
 
-const storage = multer.diskStorage({
+let storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      //fs.mkdirSync(`${PATH}`, { recursive: true })
-      return cb(null, `${PATH}`)
+    fs.mkdirSync(`${PATH}`, { recursive: true })
+    cb(null, PATH);
   },
-  filename: (req,file,cb) => {
-      return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+  filename: (req, file, cb) => {
+    let extArray = file.mimetype.split("/");
+    let extension = extArray[extArray.length - 1];
+    cb(null, file.fieldname + '-' + Date.now()+ '.' +extension)
   }
-})
+});
 
 const upload = multer({
   storage: storage
@@ -34,7 +36,7 @@ const upload = multer({
 
 //const upload = multer({dest: '../../images'}) ;
 
-//router.post("/",urlencodedParser,createUser);
+router.post("/", addCategory);
 
 //router.post("/",jsonParser,checkToken,createUser);
 //router.post("/",jsonParser,createUser);
@@ -44,29 +46,38 @@ const upload = multer({
 //router.post("/login",login);
 
 //start of the code
-router.post("/upload",upload.single('file'), function(req, res) {
-//console.log('upload : ', upload)
-  console.log('file request :', req.file)
-  if(!req.file) {
-    console.log("No File Received");
-    return res.json({
-      success: false,
-      data: req.file
+router.post("/upload", upload.single('image'), function(req, res) {
+  if (!req.file) {
+    console.log("No file is available!");
+    return res.send({
+      success: req.file
+    });
+
+  } else {
+    console.log('File is available!');    
+    return res.send({
+      success: req.file
     })
   }
-  if(req.file) {
-    console.log("File Received");
-    return res.json({
-      success: true,
-      data: req.file
-    })
-  }
-  //return false;
 });
+
+router.post("/upload/file", function(req, res, next) {
+  let request = req.body;
+  const DESTINATION = './../dwanimart_backend/src/assets/images/category/';
+  let oldPath = PATH + '/' + request.filename;
+  let newPath = DESTINATION +  request.filename;
+
+  fs.readFile(oldPath , function(err, data) {
+    fs.writeFile(newPath, data, function(err) {
+        fs.unlink(oldPath, function(){
+            if(err) throw err;   
+            return res.status(200).end();         
+        });
+    }); 
+  });
+});
+
 router.get("/", getCategory);
 router.get("/:id", getCategoryById);
 router.put("/:id",updateCategory);
-
-
-
 module.exports = router;
