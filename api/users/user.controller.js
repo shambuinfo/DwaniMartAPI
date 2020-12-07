@@ -64,7 +64,7 @@ module.exports = {
     login: (req,res) => {        
         const body = req.body;
         getUserByUserEmail(body.username, (err, results) => {
-            console.log("result in user controller file :",results);
+            //console.log("result in user controller file :",results);
             if (err) {
                 console.log(err);
             }
@@ -80,7 +80,7 @@ module.exports = {
                 const jsontoken = sign({ result: results },"qwe1234", {
                     expiresIn: "1h"
                 });
-                console.log("printing jsontoken",jsontoken);
+                //console.log("printing jsontoken",jsontoken);
                 return res.json({
                     success: 1,
                     message: "login successfully",
