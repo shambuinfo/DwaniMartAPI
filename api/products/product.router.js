@@ -63,7 +63,11 @@ router.post("/upload", upload.single('image'), function(req, res) {
 
 router.post("/upload/file", function(req, res, next) {
   let request = req.body;
-  const DESTINATION = './../dwanimart_backend/src/assets/images/category/';
+  if(!request.path) {
+    request.path = ""
+  }
+  const DESTINATION = `'./../dwanimart_backend/src/assets/images/${request.path}/'`;
+  fs.mkdirSync(`${DESTINATION}`, { recursive: true })
   let oldPath = PATH + '/' + request.filename;
   let newPath = DESTINATION +  request.filename;
 
