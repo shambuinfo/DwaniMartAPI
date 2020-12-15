@@ -1,16 +1,19 @@
 const express = require("express");
 const app = express();
 const dotenv = require('dotenv').config();
-//const cors = require("cors");
+const cors = require("cors");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 //var urlencodedParser = bodyParser.urlencoded({ extended: false }); */
 
 app.use(bodyParser.urlencoded({ extended: false }));
 const userRouter = require("./api/users/user.router");
-const productRouter = require("./api/products/product.router");
+const categoryRouter = require("./api/category/category.router");
+const subcategoryRouter = require("./api/subCategory/subCategory.router");
+const productRouter = require("./api/Product/product.router");
 
-//app.use(cors());
+
+app.use(cors());
 
 app.use(express.json());
 
@@ -22,7 +25,9 @@ app.use(function(req, res, next) {
   }); 
 
 app.use("/api/users",userRouter); 
-app.use("/api/products",productRouter);
+app.use("/api/category",categoryRouter);
+app.use("/api/subcategory",subcategoryRouter);
+app.use("/api/product",productRouter);
 
 
 app.listen(process.env.APP_PORT,() => {

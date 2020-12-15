@@ -1,8 +1,9 @@
 const { addCategory,
     getCategory,
     getCategoryById,
-    updateCategory 
- } = require("./product.controller");
+    updateCategory,
+    deleteCategory
+ } = require("./category.controller");
 
 const multer = require('multer');
 const router = require("express").Router();
@@ -37,6 +38,8 @@ const upload = multer({
 //const upload = multer({dest: '../../images'}) ;
 
 router.post("/", addCategory);
+router.put("/",deleteCategory);
+router.put("/update",updateCategory);
 
 //router.post("/",jsonParser,checkToken,createUser);
 //router.post("/",jsonParser,createUser);
@@ -66,8 +69,9 @@ router.post("/upload/file", function(req, res, next) {
   if(!request.path) {
     request.path = ""
   }
-  const DESTINATION = `'./../dwanimart_backend/src/assets/images/${request.path}/'`;
-  fs.mkdirSync(`${DESTINATION}`, { recursive: true })
+  //const DESTINATION = `'./../dwanimart_backend/src/assets/images/${request.path}/'`;
+  const DESTINATION = './../dwanimart_backend/src/assets/images/category/';
+  //fs.mkdirSync(`${DESTINATION}`, { recursive: true })
   let oldPath = PATH + '/' + request.filename;
   let newPath = DESTINATION +  request.filename;
 
@@ -83,5 +87,6 @@ router.post("/upload/file", function(req, res, next) {
 
 router.get("/", getCategory);
 router.get("/:id", getCategoryById);
-router.put("/:id",updateCategory);
+
+//router.post("/:id",updateCategory);
 module.exports = router;
