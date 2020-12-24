@@ -20,7 +20,7 @@ module.exports = {
     
     getCategory: callBack => {
         pool.query(
-            `select * from category`,
+            `select id, categoryName as name, categoryName as title, imagePath, status from category`,
             [],
             (error,results,fields) => {
                 if (error) {
@@ -33,7 +33,7 @@ module.exports = {
 
     getCategoryById: (id,callBack) => {
         pool.query(
-            `select * from category where id=?`,
+            `select id, categoryName as name, name as title, imagePath, status from category where id=?`,
             [id],
             (error,results,fields) => {
                 if (error) {
@@ -45,6 +45,7 @@ module.exports = {
     },
 
     deleteCategory: (id,callBack) => {
+        console.log("printing id in service js :",id);
         pool.query(
             `update category set status = 'Inactive' where id=?`,
             [id],
@@ -55,6 +56,26 @@ module.exports = {
                 return callBack(null,results[0]);
             }
         );
+    },
+
+    updateCategory: (data,callBack) => {
+        console.log("printing id in updateCategory :",data);
+        pool.query(
+            `update category set categoryName=?,imagePath=?,status=? where id=?`,
+            [
+                data.categoryName,
+                data.imagePath,
+                data.status,
+                data.id
+            ],
+            (error,results,fields) => {
+                if (error) {
+                    return callBack(error);
+                }
+                return callBack(null,results[0]);
+            }
+        );
     }
+
 
 };

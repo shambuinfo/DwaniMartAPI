@@ -1,19 +1,21 @@
 const express = require("express");
 const app = express();
 const dotenv = require('dotenv').config();
-//const cors = require("cors");
+const cors = require("cors");
 var bodyParser = require('body-parser');
-
 var jsonParser = bodyParser.json();
+var path = require("path")
 //var urlencodedParser = bodyParser.urlencoded({ extended: false }); */
 
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
+app.use(bodyParser.urlencoded({ extended: false }));
 const userRouter = require("./api/users/user.router");
-const productRouter = require("./api/products/product.router");
+const categoryRouter = require("./api/category/category.router");
+const subcategoryRouter = require("./api/subCategory/subCategory.router");
+const productRouter = require("./api/Product/product.router");
+const couponRouter = require("./api/coupon/coupon.router");
 
-//app.use(cors());
+
+app.use(cors());
 
 app.use(express.json());
 
@@ -25,8 +27,18 @@ app.use(function(req, res, next) {
   }); 
 
 app.use("/api/users",userRouter); 
-app.use("/api/products",productRouter);
+app.use("/api/category",categoryRouter);
+app.use("/api/subcategory",subcategoryRouter);
+app.use("/api/product",productRouter);
+app.use("/api/coupon",couponRouter);
+app.use(express.static('./uploads'));
 
 app.listen(process.env.APP_PORT,() => {
     console.log("server is up and running on PORT :",process.env.APP_PORT);
+});
+
+app.use(function (err, req, res, next) {
+  console.error(err.message);
+  if (!err.statusCode) err.statusCode = 500;
+  res.status(err.statusCode).send(err.message);
 });
