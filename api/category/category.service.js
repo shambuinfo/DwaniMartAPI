@@ -20,7 +20,7 @@ module.exports = {
     
     getCategory: callBack => {
         pool.query(
-            `select * from category`,
+            `select id, categoryName as name, categoryName as title, imagePath, status from category`,
             [],
             (error,results,fields) => {
                 if (error) {
@@ -33,7 +33,7 @@ module.exports = {
 
     getCategoryById: (id,callBack) => {
         pool.query(
-            `select * from category where id=?`,
+            `select id, categoryName as name, name as title, imagePath, status from category where id=?`,
             [id],
             (error,results,fields) => {
                 if (error) {

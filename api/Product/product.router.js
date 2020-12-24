@@ -13,7 +13,7 @@ const path = require('path');
 var bodyParser = require('body-parser');
 var fs = require('fs');
  
-const PATH = './uploads';
+const PATH = './uploads/product/';
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {

@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config();
 const cors = require("cors");
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
+var path = require("path")
 //var urlencodedParser = bodyParser.urlencoded({ extended: false }); */
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,7 +31,7 @@ app.use("/api/category",categoryRouter);
 app.use("/api/subcategory",subcategoryRouter);
 app.use("/api/product",productRouter);
 app.use("/api/coupon",couponRouter);
-
+app.use(express.static('./uploads'));
 
 app.listen(process.env.APP_PORT,() => {
     console.log("server is up and running on PORT :",process.env.APP_PORT);

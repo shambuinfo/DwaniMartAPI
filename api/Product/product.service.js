@@ -6,7 +6,7 @@ module.exports = {
     createproduct: (data, callBack) => {
         pool.query(
             `INSERT INTO product(productName,productSKU,categoryId,subCategoryId,productPrice,sellingPrice,productShortDesc,
-             productLongDesc,metaTitle,metaDesc,productImage,status) values(?,?,?,?,?,?,?,?,?,?,?,?)`,
+             productLongDesc,metaTitle,metaDesc,productImage,productTag,status) values(?,?,?,?,?,?,?,?,?,?,?,?,?)`,
             [   data.productName,
                 data.productSKU,
                 data.categoryId,
@@ -18,6 +18,7 @@ module.exports = {
                 data.metaTitle,
                 data.metaDesc,
                 data.productImage,
+                data.productTag,
                 data.status              
             ],
             (error,results,fields) => {
@@ -57,7 +58,9 @@ module.exports = {
 
     getProduct: callBack => {
         pool.query(
-            `select * from product`,
+            `select p.id, productName as title, productSKU, p.categoryId, c.categoryName as type, c.categoryName as brand, c.categoryName as category, subCategoryId, subcategoryName,  productPrice as price,
+            sellingPrice, productShortDesc, productLongDesc as description, metaTitle, metaDesc, productImage as images, productTag as tags,
+            p.status, p.createdOn from product p JOIN category c on c.id = p.categoryId JOIN subcategory sc on sc.id = p.subcategoryId`,
             [],
             (error,results,fields) => {
                 if (error) {
@@ -99,7 +102,7 @@ module.exports = {
     updateProduct: (data,callBack) => {
         pool.query(                         
             `update product set productName=?,productSKU=?,categoryId=?,subCategoryId=?,productPrice=?,
-            sellingPrice=?,productShortDesc=?,productLongDesc=?,metaTitle=?,metaDesc=?,productImage=?,
+            sellingPrice=?,productShortDesc=?,productLongDesc=?,metaTitle=?,metaDesc=?,productImage=?,productTag=?,
             status=? where id=?`,
             [
                 data.productName,
@@ -113,6 +116,7 @@ module.exports = {
                 data.metaTitle,
                 data.metaDesc,
                 data.productImage,
+                data.productTag,
                 data.status,                
                 data.id
             ],

@@ -80,11 +80,12 @@ module.exports = {
                 const jsontoken = sign({ result: results },"qwe1234", {
                     expiresIn: "1h"
                 });
-                //console.log("printing jsontoken",jsontoken);
+                
                 return res.json({
                     success: 1,
                     message: "login successfully",
-                    token: jsontoken
+                    token: jsontoken,
+                    user: results
                 });
             } else {
                 return res.json({

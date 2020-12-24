@@ -73,7 +73,6 @@ module.exports = {
                 if (error) {
                     callBack(error);
                 }
-                console.log("results from user service file",results);
                 return callBack(null, results[0]);
             }
 
