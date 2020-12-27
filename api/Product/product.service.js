@@ -74,7 +74,9 @@ module.exports = {
 
     getProductById: (id,callBack) => {
         pool.query(
-            `select * from product where id=?`,
+            `select p.id, productName as title, productSKU, p.categoryId, c.categoryName as type, c.categoryName as brand, c.categoryName as category, subCategoryId, subcategoryName,  productPrice as price,
+            sellingPrice, productShortDesc, productLongDesc as description, metaTitle, metaDesc, productImage as images, productTag as tags,
+            p.status, p.createdOn from product p JOIN category c on c.id = p.categoryId JOIN subcategory sc on sc.id = p.subcategoryId where p.id=?`,
             [id],
             (error,results,fields) => {
                 if (error) {
