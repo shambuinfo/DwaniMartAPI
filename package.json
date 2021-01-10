@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js node --max-old-space-size=1024 app.js"
   },
   "keywords": [],
   "author": "",
