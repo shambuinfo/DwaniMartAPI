@@ -1,21 +1,20 @@
-const {createproduct,
+const {createBrand,
     getCategory,
-    getsubCategory,
-    getProduct,
-    getProductById,
-    deleteProduct,
-    updateProduct,
-    getSubCategoriesById,
-    getAdminProduct,
-    getAdminProductById
-} = require("./product.service");
+   getsubCategory,
+    getBrand,
+    getsubCategoryById,
+    deleteBrand,
+    getBrandbyId,
+    getBrandbySubCatId
+    //updateProduct
+} = require("./brand.service");
 var dateTime = require('node-datetime');
 
 
 module.exports = {
-    addProduct: (req,res) => {
+    addBrand: (req,res) => {
         const body = req.body;
-        createproduct(body,(err,results) => {
+        createBrand(body,(err,results) => {
             if(err) {
                 console.log(err);
                 return res.status(500).json({
@@ -30,15 +29,15 @@ module.exports = {
         });
     },
 
-    getSubCategoriesById: (req,res) => {
-        const categoryId = req.params.id;        
+    getsubCategoryById: (req,res) => {
+        const categoryId = req.params.id;
         if(!categoryId) {
             return res.json({
                 success: 0,
                 message: "Record not found"
             });
         }
-        getSubCategoriesById(categoryId,(err,results) => {
+        getsubCategoryById(categoryId,(err,results) => {
             if (err) {
                 console.log(err);
                 return;
@@ -57,16 +56,15 @@ module.exports = {
         });
     },
 
-
-    getProductById: (req,res) => {
-        const id = req.params.id;
-        if(!id) {
+    getBrandbySubCatId: (req,res) => {
+        const subcategoryId = req.params.id;
+        if(!subcategoryId) {
             return res.json({
                 success: 0,
                 message: "Record not found"
             });
         }
-        getProductById(id,(err,results) => {
+        getBrandbySubCatId(subcategoryId,(err,results) => {
             if (err) {
                 console.log(err);
                 return;
@@ -75,7 +73,7 @@ module.exports = {
             {
                 return res.json({
                     success: 0,
-                    message: "Record not found"
+                    message: "Record not found for result"
                 });
             }
             return res.json({
@@ -85,21 +83,7 @@ module.exports = {
         });
     },
 
-    getProduct: (req,res) => {
-        getProduct((err,results) => {
-            if(err) {
-                console.log(err);
-                return;
-            }
-            return res.json({
-                success: 1,
-                data: results
-            });
-        });
-    },
-
-    getAdminProductById: (req,res) => {
-        console.log('hhhhhh')
+    getBrandbyId: (req,res) => {
         const id = req.params.id;
         if(!id) {
             return res.json({
@@ -107,7 +91,7 @@ module.exports = {
                 message: "Record not found"
             });
         }
-        getAdminProductById(id,(err,results) => {
+        getBrandbyId(id,(err,results) => {
             if (err) {
                 console.log(err);
                 return;
@@ -116,7 +100,7 @@ module.exports = {
             {
                 return res.json({
                     success: 0,
-                    message: "Record not found"
+                    message: "Record not found for result"
                 });
             }
             return res.json({
@@ -126,9 +110,8 @@ module.exports = {
         });
     },
 
-    getAdminProduct: (req,res) => {
-        console.log("entering getAdminProduct");
-        getAdminProduct((err,results) => {
+    getBrand: (req,res) => {
+        getBrand((err,results) => {
             if(err) {
                 console.log(err);
                 return;
@@ -167,10 +150,11 @@ module.exports = {
         });
     },
 
-
-    deleteProduct: (req,res) => {
+     deleteBrand: (req,res) => {
+         console.log("req.body :",req.body);
         const id = req.body.id;
-        deleteProduct(id,(err,results) => {
+        console.log("deleteBrand :",id);
+        deleteBrand(id,(err,results) => {
             if (err) {
                 console.log(err);
                 return;
@@ -188,29 +172,5 @@ module.exports = {
                 message: "Soft deleted successfully"
             });
         });
-    },
-
-    updateProduct: (req,res) => {
-        const id = req.body.id;
-        const body = req.body;
-        updateProduct(body,(err,results) => {
-            if (err) {
-                console.log(err);
-                return;
-            }    
-            /*        
-            if(!results) 
-            {
-                return res.json({
-                    success: 0,
-                    message: "failed to update"
-                });
-            } */
-            return res.json({
-                success: 1,
-                message: "updated successfully"
-            });
-        });
     }
-
 };

@@ -13,6 +13,7 @@ const categoryRouter = require("./api/category/category.router");
 const subcategoryRouter = require("./api/subCategory/subCategory.router");
 const productRouter = require("./api/Product/product.router");
 const couponRouter = require("./api/coupon/coupon.router");
+const brandRouter = require("./api/brand/brand.router");
 
 
 app.use(cors());
@@ -31,6 +32,7 @@ app.use("/api/category",categoryRouter);
 app.use("/api/subcategory",subcategoryRouter);
 app.use("/api/product",productRouter);
 app.use("/api/coupon",couponRouter);
+app.use("/api/brand",brandRouter);
 app.use(express.static('./uploads'));
 
 app.listen(process.env.APP_PORT,() => {

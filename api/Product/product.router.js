@@ -4,7 +4,10 @@ const { addProduct,
     getProduct,
     getProductById,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getSubCategoriesById,
+    getAdminProduct,
+    getAdminProductById
  } = require("./product.controller");
 
 const multer = require('multer');
@@ -70,10 +73,13 @@ router.post("/upload/file", function(req, res, next) {
   });
 });
 
+router.get("/getAdminProduct", getAdminProduct);
 router.post("/", addProduct);
 router.get("/getCategory",getCategory);
 router.get("/getsubCategory", getsubCategory);
 router.get("/",getProduct);
 router.get("/:id", getProductById);
+router.get("/getAdminProductById/:id", getAdminProductById);
+router.get("/getSubCategoriesById/:id",getSubCategoriesById);
 
 module.exports = router;
