@@ -94,6 +94,7 @@ module.exports = {
 
     getProductById: (id,callBack) => {
         pool.query(
+<<<<<<< HEAD
             `select p.id, productName as title, productSKU, p.categoryId, c.categoryName as type, b.brandName as brand, c.categoryName as category, p.subCategoryId, subcategoryName,  productPrice as price,
             sellingPrice, productShortDesc, productLongDesc as description, metaTitle, metaDesc, productImage as images, productTag as tags,
             p.status, p.createdOn from product p JOIN category c on c.id = p.categoryId JOIN subcategory sc on sc.id = p.subcategoryId JOIN brand as b on b.subcategoryId = p.subcategoryId where p.id=?`,
@@ -110,6 +111,11 @@ module.exports = {
     getAdminProductById: (id,callBack) => {
         pool.query(
             `select * from product where id=?`,
+=======
+            `select p.id, productName as title, productSKU, p.categoryId, c.categoryName as type, c.categoryName as brand, c.categoryName as category, subCategoryId, subcategoryName,  productPrice as price,
+            sellingPrice, productShortDesc, productLongDesc as description, metaTitle, metaDesc, productImage as images, productTag as tags,
+            p.status, p.createdOn from product p JOIN category c on c.id = p.categoryId JOIN subcategory sc on sc.id = p.subcategoryId where p.id=?`,
+>>>>>>> b70aa44ce312ebda231b265af8ac8c9b5f6d3bc9
             [id],
             (error,results,fields) => {
                 if (error) {
