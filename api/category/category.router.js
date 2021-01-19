@@ -2,7 +2,9 @@ const { addCategory,
     getCategory,
     getCategoryById,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    getAdminCategory,
+    getAdminCategoryById
  } = require("./category.controller");
 
 const multer = require('multer');
@@ -17,7 +19,7 @@ var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 */
 // File upload settings  
-const PATH = './uploads';
+const PATH = './uploads/category/';
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -87,6 +89,8 @@ router.post("/upload/file", function(req, res, next) {
 
 router.get("/", getCategory);
 router.get("/:id", getCategoryById);
+router.get("/", getAdminCategory);
+router.get("/:id", getAdminCategoryById);
 
 //router.post("/:id",updateCategory);
 module.exports = router;

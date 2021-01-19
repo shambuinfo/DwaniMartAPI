@@ -60,6 +60,24 @@ module.exports = {
         );
     },
 
+    getsubCategoryByCategoryId: (id,callBack) => {
+        pool.query(
+            `select 
+                *
+            from
+                subcategory 
+            where 
+                categoryId = ?`,
+            [id],
+            (error,results,fields) => {
+                if (error) {
+                    return callBack(error);
+                }
+                return callBack(null,results);
+            }
+        );
+    },
+
     deletesubCategory: (id,callBack) => {
         console.log("printing id in service js :",id);
         pool.query(
