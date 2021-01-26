@@ -58,7 +58,7 @@ module.exports = {
     },
 
 
-    getProductById: (req,res) => {
+    getProductById: (req,res) => {        
         const id = req.params.id;
         if(!id) {
             return res.json({

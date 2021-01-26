@@ -2,7 +2,7 @@ const {createCoupon,
     getCategory,
    // getsubCategory,
     getCoupon,
-    //getProductById,
+    getCouponByCode,
     deleteCoupon,
     //updateProduct
 } = require("./coupon.service");
@@ -59,6 +59,34 @@ module.exports = {
             if(err) {
                 console.log(err);
                 return;
+            }
+            return res.json({
+                success: 1,
+                data: results
+            });
+        });
+    },
+
+    getCouponByCode: (req,res) => {
+        console.log("coupon req :",req.body,req.params.couponvalue);
+        const couponCode = req.params.couponvalue;
+        if(!couponCode) {
+            return res.json({
+                success: 0,
+                message: "Invalid Coupon Code"
+            });
+        }
+        getCouponByCode(couponCode,(err,results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            if(!results) 
+            {
+                return res.json({
+                    success: 0,
+                    message: "Invalid Coupon Code"
+                });
             }
             return res.json({
                 success: 1,

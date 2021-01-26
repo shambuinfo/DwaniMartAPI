@@ -68,6 +68,19 @@ module.exports = {
         );
     },
 
+    getCouponByCode: (couponCode,callBack) => {
+        pool.query(
+            `select * from coupon where couponCode=? and status = 1 limit 0,1`,
+            [couponCode],
+            (error,results,fields) => {
+                if (error) {
+                    return callBack(error);
+                }
+                return callBack(null,results[0]);
+            }
+        );
+    },
+
 
     deleteCoupon: (id,callBack) => {
         pool.query(

@@ -72,7 +72,7 @@ module.exports = {
     },
 
     getsubCategory: (req,res) => {
-        console.log("getcategory list :",req.body);
+        console.log("getcategory subcat updated list :",req.body);
         getsubCategory((err,results) => {
             if(err) {
                 console.log(err);
