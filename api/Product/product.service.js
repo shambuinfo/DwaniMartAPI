@@ -107,6 +107,28 @@ module.exports = {
         );
     },
 
+    getAdminProductById: (id,callBack) => {
+        pool.query(
+            `select 
+                p.id, productName, productSKU, p.categoryId, c.categoryName, b.brandName as brand, 
+                p.brandId, c.categoryName as category, p.subCategoryId, subcategoryName, productPrice, 
+                sellingPrice, discountValue, discountType, productShortDesc, productLongDesc, quantity, 
+                metaTitle, metaDesc, productImage as images, productTag, p.status, p.createdOn 
+            from 
+                product p JOIN category c on c.id = p.categoryId 
+                JOIN subcategory sc on sc.id = p.subcategoryId 
+                JOIN brand b on b.id = p.brandId 
+            where p.id =?`,
+            [id],
+            (error,results,fields) => {
+                if (error) {
+                    return callBack(error);
+                }
+                return callBack(null,results[0]);
+            }
+        );
+    },
+
     getSubCategoriesById: (categoryId,callBack) => {
         pool.query(
             `select * from subcategory where categoryId=?`,

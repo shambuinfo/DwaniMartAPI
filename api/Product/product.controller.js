@@ -99,7 +99,6 @@ module.exports = {
     },
 
     getAdminProductById: (req,res) => {
-        console.log('hhhhhh')
         const id = req.params.id;
         if(!id) {
             return res.json({
@@ -127,7 +126,6 @@ module.exports = {
     },
 
     getAdminProduct: (req,res) => {
-        console.log("entering getAdminProduct");
         getAdminProduct((err,results) => {
             if(err) {
                 console.log(err);

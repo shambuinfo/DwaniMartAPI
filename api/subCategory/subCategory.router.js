@@ -3,7 +3,8 @@ const { addsubCategory,
     getsubCategory,
     getsubCategoryById,
     updatesubCategory,
-    deletesubCategory
+    deletesubCategory,
+    getsubCategoryByCategoryId
  } = require("./subCategory.controller");
 
 const multer = require('multer');
@@ -87,9 +88,9 @@ router.post("/upload/file", function(req, res, next) {
 });
 
 router.get("/cat",getCategory);
-//router.get("/", getCategory);
+router.get("/catId/:id", getsubCategoryByCategoryId);
 router.get("/", getsubCategory);
-//router.get("/:id", getsubCategoryById);
+router.get("/:id", getsubCategoryById);
 
 
 //router.post("/:id",updateCategory);

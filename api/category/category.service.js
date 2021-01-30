@@ -44,6 +44,32 @@ module.exports = {
         );
     },
 
+    getAdminCategory: callBack => {
+        pool.query(
+            `select * from category`,
+            [],
+            (error,results,fields) => {
+                if (error) {
+                    return callBack(error);
+                }
+                return callBack(null,results);
+            }
+        );
+    },
+
+    getAdminCategoryById: (id,callBack) => {
+        pool.query(
+            `select * from category where id=?`,
+            [id],
+            (error,results,fields) => {
+                if (error) {
+                    return callBack(error);
+                }
+                return callBack(null,results[0]);
+            }
+        );
+    },
+
     deleteCategory: (id,callBack) => {
         console.log("printing id in service js :",id);
         pool.query(
