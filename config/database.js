@@ -8,7 +8,7 @@ const pool = mysql.createConnection({
     user: "root",
     password: "",
     connectionLimit: 5, //mysql connection pool length
-    database: "newdwanimart" 
+    database: "buymore" 
 
 })
 /*

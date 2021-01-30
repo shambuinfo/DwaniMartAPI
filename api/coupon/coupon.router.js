@@ -1,7 +1,8 @@
 const { addCoupon,
     getCoupon,
     getCategory,
-    deleteCoupon
+    deleteCoupon,
+    getCouponByCode
  } = require("./coupon.controller");
 
 
@@ -10,6 +11,7 @@ var bodyParser = require('body-parser');
 
 router.post("/", addCoupon);
 router.get("/",getCoupon);
+router.get("/getCouponCode/:couponvalue",getCouponByCode);
 router.get("/getCategory", getCategory);
 router.put("/",deleteCoupon);
 //router.get("/",getProduct);

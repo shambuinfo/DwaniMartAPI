@@ -57,7 +57,7 @@ module.exports = {
     },
 
     getCategory: (req,res) => {
-        console.log("getcategory list :",req.body);
+        console.log("getcategory updated list :",req.body);
         getCategory((err,results) => {
             if(err) {
                 console.log(err);

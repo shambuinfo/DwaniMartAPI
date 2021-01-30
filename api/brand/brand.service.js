@@ -3,21 +3,12 @@ const pool = require("../../config/database");
 //const { updateProduct } = require("./coupon.controller");
 
 module.exports = {
-    createCoupon: (data, callBack) => {
+    createBrand: (data, callBack) => {
         pool.query(
-            `INSERT INTO coupon(couponTitle,couponCode,valid_from,valid_until,quantity,
-            discountPrice,discountType,category,
-            min_value,max_value,status) values(?,?,?,?,?,?,?,?,?,?,?)`,
-            [   data.couponTitle,
-                data.couponCode,
-                data.valid_from,
-                data.valid_until,
-                data.quantity,
-                data.discountPrice,                
-                data.discountType,
-                data.category,
-                data.min_value,
-                data.max_value,                
+            `INSERT INTO brand(brandName,categoryId,subcategoryId,status) values(?,?,?,?)`,
+            [   data.brandName,
+                data.categoryId,
+                data.subcategoryId,
                 data.status              
             ],
             (error,results,fields) => {
@@ -42,9 +33,9 @@ module.exports = {
         );
     },
 
-   /* getsubCategory: callBack => {
+   getsubCategory: callBack => {
         pool.query(
-            `select * from subcategory`,
+            `select id,subcategoryName from subcategory`,
             [],
             (error,results,fields) => {
                 if (error) {
@@ -53,11 +44,50 @@ module.exports = {
                 return callBack(null,results);
             }
         );
-    }, */
+    }, 
 
-    getCoupon: callBack => {
+    getsubCategoryById: (categoryId,callBack) => {
         pool.query(
-            `select * from coupon`,
+            `select id,subcategoryName from subcategory where categoryId=?`,
+            [categoryId],
+            (error,results,fields) => {
+                if (error) {
+                    return callBack(error);
+                }
+                return callBack(null,results);
+            }
+        );
+    },
+
+    getBrandbyId: (id,callBack) => {
+        pool.query(
+            `select * from brand where id=?`,
+            [id],
+            (error,results,fields) => {
+                if (error) {
+                    return callBack(error);
+                }
+                return callBack(null,results);
+            }
+        );
+    },
+
+    getBrandbySubCatId: (subcategoryId,callBack) => {
+        pool.query(
+            `select * from brand where subcategoryId=?`,
+            [subcategoryId],
+            (error,results,fields) => {
+                if (error) {
+                    return callBack(error);
+                }
+                return callBack(null,results);
+            }
+        );
+    },
+
+    getBrand: callBack => {
+        pool.query(
+            `select * from brand`,
             [],
             (error,results,fields) => {
                 if (error) {
@@ -68,23 +98,10 @@ module.exports = {
         );
     },
 
-    getCouponByCode: (couponCode,callBack) => {
-        pool.query(
-            `select * from coupon where couponCode=? and status = 1 limit 0,1`,
-            [couponCode],
-            (error,results,fields) => {
-                if (error) {
-                    return callBack(error);
-                }
-                return callBack(null,results[0]);
-            }
-        );
-    },
 
-
-    deleteCoupon: (id,callBack) => {
+    deleteBrand: (id,callBack) => {
         pool.query(
-            `update coupon set status = 'Inactive' where coupon_id=?`,
+            `update brand set status = 'Inactive' where id=?`,
             [id],
             (error,results,fields) => {
                 if (error) {
